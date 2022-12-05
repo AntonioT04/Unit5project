@@ -13,22 +13,23 @@
 <div class = "reg_box">
     <form method = "POST" action= "">
         {% csrf_token %}
-        <div class = "inp">
-            <input type= "text" name= "username" placeholder= "Username...">
+        <div class="login">
+            <h1>Login</h1>
+            <form method="post">
+                <input type="text" name="username" placeholder="Username" required="required" />
+                <input type="password" name="password" placeholder="Password" required="required" />
+                <input type="submit" class="btn btn-primary btn-block btn-large">
+            </form>
         </div>
-
-        <div class "inp">
-            <input type= "text" name= "password" placeholder= "Password...">
-        </div>
-
-        <input class = "submit" type= "submit" name = "Create User">
     </form>
     {{form.errors}}
     <div class = "login_link">
         Don't have an account? <a href= "{%url 'register'%}"> Sign Up</a>
     </div>
 </div>
-<img class= "im" src = "{% static "images/italian_logo.png" %}">
+{% comment %} <img class= "im" src = "{% static "images/italian_logo.png" %}"> {% endcomment %}
 </body>
 </html>
+
+
 
