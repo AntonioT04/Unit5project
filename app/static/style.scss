@@ -1,8 +1,10 @@
 body{
-    background-color: lightblue;
+    background-color: black !important;
 }
 .reg_box{
+
    justify-content: center; 
+   align-content: center;
 }
 
 $bg: #f3f8fa;
@@ -10,14 +12,37 @@ $white: #fff;
 $black: #282936;
 
 .submit{
-    background-color: aqua;
+    background-color: red;
 }
 
+.login_link a{
+    text-decoration: none;
+    color: red;
+    transition: transform .5s ;
 
+    :hover{
+        background-color: red;
+        color:black
+    }
+}
+
+h3{
+    color:white !important
+}
 header {
     top: 0;
     background-color: transparent;
   }
+
+
+.login_link{
+    color:white
+}
+
+.im{
+    margin-left: 25%;
+    margin-right:auto ;
+}
 
 nav {
     color: #4abef8;
@@ -29,7 +54,7 @@ nav {
 }
 
 nav img {
-    width: 25%;
+    width: 10%;
 }
 
 * {
@@ -50,7 +75,7 @@ nav img {
       position: absolute;
       font-size: 1.5em;
      
-      color: #f2f7f9;
+      color: $white;
       text-decoration: none;
       &:after{
           content: '';

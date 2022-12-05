@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 # Create your views here.
 from .models import *
-from .forms import OrderForm, CreateUserForm
+from .forms import OrderForm, CreateUserForm, CreateProfileForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -11,23 +11,24 @@ from .decorators import *
 from django.contrib.auth.models import Group
 
 
-@unauthenticated_user
+
 def registerPage(request):
     form= CreateUserForm()
     if request.method =="POST":
-        form= CreateUserForm()
+        form= CreateUserForm(request.POST)
         if form.is_valid():
             user= form.save()
             username= form.cleaned_data.get('username')
 
             group = Group.objects.get(name= 'customer')
             user.groups.add(group)
+            
             messages.success(request, "Account was created for" + username)
             return redirect('login')
     context= {'form': form}
     return render(request, 'register.html' ,context)
 
-@unauthenticated_user
+#@unauthenticated_user
 def loginPage(request):
 
     if request.method== "POST":
@@ -41,8 +42,6 @@ def loginPage(request):
 
         else:
             messages.info(request, "Username OR password is wrong. Try Again.")
-        
-
     context= { }
     return render(request, 'login.html' ,context)
 
@@ -59,10 +58,10 @@ def home(request):
     customers= Customer.objects.all()
     products= Product.objects.all()
 
-    delivered= orders.filter(status= "Delivered").count()
-    pending= orders.filter(status= "Pending").count()
+    cash= orders.filter(payment= "Cash").count()
+    card= orders.filter(payment= "Card").count()
     context= {'orders': orders, 'customers':customers, 'products':products,
-    'pending': pending, 'delivered':delivered
+    'card': card, 'cash':cash
     }
 
     return render(request, 'home.html' ,context)
@@ -77,7 +76,7 @@ def customer(request):
 
 
 @login_required(login_url= "login")
-@allowed_users(allowed_roles=['admin'])
+
 def createOrder(request):
     form= OrderForm()
     if request.method== "POST":
@@ -118,7 +117,33 @@ def deleteOrder(request, pk):
     return render(request, 'delete.html', context)
 
 
+
+
+@login_required(login_url="log_in")
+def createProf(request):
+    form = CreateProfileForm()
+    context = {
+        "form": form,
+    }
+    if request.method == "POST":
+        form = CreateProfileForm(request.POST)
+        if form.is_valid():
+            p = form.save()
+            p.creator = request.user
+            p.save()
+            return redirect("home")
+    return render(request, "create_prof.html", context)
+
 @login_required(login_url= "login")
-def userPage(request):
-    context= {}
-    return render(request, 'user.html', context)
+def math(request):
+    orders= Order.objects.all()
+    customers= Customer.objects.all()
+    products= Product.objects.all()
+
+    checkings= orders.filter(payment= "Checkings").count()
+    savings= orders.filter(payment= "Savings").count()
+    context= {'orders': orders, 'customers':customers, 'products':products,
+    'savings': savings, 'checkings':checkings
+    }
+
+    return render(request, 'user.html' ,context)

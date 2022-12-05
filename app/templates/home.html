@@ -1,60 +1,84 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-
-
-
-
     <div>
-        <h5>CUSTOMERS</h5>
+        
         <hr>
         <div class= 'card'>
-            <a class ='btn' href = ''> Create Customer</a>
-            <table>
-                <tr>
-                    <th>Customer</th>
-                    <th>Phone</th>
+          <h5>CUSTOMERS</h5>
+            <a class ='btn' href = "{% url 'create_prof' %}"> Create Customer</a>
+            
+            <table class="table table-bordered table-dark">
+                <thead>
                     
-                </tr>
-                {% for customer in customers %}
-                    <tr>
-                        <td>{{customer.name}}</td>
-                        <td>{{customer.phone}}</td>
-                         
-                    </tr>
+                  <tr>
+                    
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">E-mail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                  <tr>
+                    
+                    
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.phone}}</td>
+                    <td>{{customer.email}}</td>
+                    
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
                 
-                {% endfor %}
-            </table>
+              </table>
     <div>
 
         <div>
-            <h5>LAST 5 ORDERS</h5>
+            <h5>ORDERS</h5>
             <hr>
+            
             <div class= 'card'>
-                <a class ='btn' href = "{%url "create_order"%}"> Create Order</a>
-                <table>
-                    <tr>
-                        <th>Product</th>
-                        <th>Date Ordered</th>
-                        <th>Status</th>
-                        <th>Update</th>
-                        <th>Remove</th>
+                
+                <table class="table table-bordered table-dark">
+                    <thead>
                         
-                    </tr>
-                    {% for order in orders %}
-                        <tr>
-                            <td>{{order.product}}</td>
-                            <td>{{order.date_created}}</td>
-                            <td>{{order.status}}</td>
-                            <td><a href= "{%url 'update_order' order.id %}">Update</a> </td>
-                            <td><a href= "{%url 'delete_order' order.id %}">Delete</a> </td>
-                             
-                        </tr>
+                      <tr>
+                        
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Pizza</th>
+                        <th scope="col">Payment Method</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Order Made</th>
+                        <th scope="col">Update</th>
+                        <th scope="col">Remove</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                      <tr>
+                        
+                        
+                        <td>{{order.customer}}</td>
+                        
+                        <td>{{order.product}}</td>
+                        
+                        <td>{{order.payment}}</td>
+                        <td>{{order.product.price}}</td>
+                        <td>{{order.date_created}}</td>
+                        <td><a href= "{%url 'update_order' order.id %}">Update</a> </td>
+                        <td><a href= "{%url 'delete_order' order.id %}">Delete</a> </td>
+                        
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody>
                     
-                    {% endfor %}
-                </table>
+                  </table>
         <div>
-</body>
-</html>
+
 
 {% endblock content %}

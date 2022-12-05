@@ -3,4 +3,41 @@
 
 
     <h3> User Profile</h3>
+    <a class ='btn' href = "{%url "create_order"%}"> Make Order</a>
+    <table class="table table-bordered table-dark">
+      
+        <thead>
+            
+          <tr>
+            
+            <th scope="col">Customer Name</th>
+            <th scope="col">Pizza</th>
+            <th scope="col">Payment Method</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date Made</th>
+            
+            
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+          <tr>
+            
+            
+            <td>{{order.customer}}</td>
+                        
+            <td>{{order.product}}</td>
+            
+            <td>{{order.payment}}</td>
+            <td>{{order.product.price}}</td>
+            <td>{{order.date_created}}</td>
+            
+            
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+        
+      </table>
+
 {% endblock content %}
